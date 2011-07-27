@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Cyril Picard"]
   s.email       = ["Cyril@picard.ch"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Statify your models}
+  s.description = %q{Enables easy configuration of a status field in your ActiveRecord and Mongoid models.}
 
   s.rubyforge_project = "statify"
 
