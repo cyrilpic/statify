@@ -22,15 +22,17 @@ module Statify
     end
   
     def configure_status(sym)
-      validates :status, :presence => true, :inclusion => { :in => lambda { |recorde| @_status_code } }
+      validates :status, :presence => true, :inclusion => { :in => lambda { |record| @_status_code } }
       
       define_method('set_next_status') do
-        next_status_i = @_status_code.index(self.status) + 1
-        self.status = @_status_code[next_status_i] if @_status_code.count < next_status_i
+        _status_code = self.class.instance_variable_get('@_status_code');
+        next_status_i = _status_code.index(self.status) + 1
+        self.status = _status_code[next_status_i] if _status_code.count > next_status_i
       end
       define_method('set_previous_status') do
-        prev_status_i = @_status_code.index(self.status) - 1
-        self.status = @_status_code[prev_status_i] unless prev_status_i < 0
+        _status_code = self.class.instance_variable_get('@_status_code');
+        prev_status_i = _status_code.index(self.status) - 1
+        self.status = _status_code[prev_status_i] unless prev_status_i < 0
       end
       
       if include? Mongoid::Document
