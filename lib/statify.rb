@@ -20,7 +20,7 @@ module Statify
         scope sym, where(:status => sym)
       end
     end
-  
+    
     def configure_status(sym)
       validates :status, :presence => true, :inclusion => { :in => lambda { |record| @_status_code } }
       
@@ -46,8 +46,12 @@ module Statify
         end
       end
     end
+    
+    def possible_status
+      @_status_code
+    end
+    
   end
-  
 end
 
 if Rails::Application::const_defined? :ActiveRecord
