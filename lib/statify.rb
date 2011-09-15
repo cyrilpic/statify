@@ -35,7 +35,7 @@ module Statify
         self.status = _status_code[prev_status_i] unless prev_status_i < 0
       end
       
-      if Rails::Application::const_defined? :Mongoid && include? Mongoid::Document
+      if Rails::Application::const_defined?(:Mongoid) && include?(Mongoid::Document)
         field :status, :type => Symbol, :default => sym
       else
         define_method('status') do
