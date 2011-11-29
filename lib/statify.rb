@@ -39,10 +39,12 @@ module Statify
         field :status, :type => Symbol, :default => sym
       else
         define_method('status') do
-          @_status_code[self.read_attribute('status')]
+          _status_code = self.class.instance_variable_get('@_status_code');
+          _status_code[self.read_attribute('status')]
         end
         define_method('status=') do |value|
-          self.write_attribute('status',@_status_code.index(value))
+          _status_code = self.class.instance_variable_get('@_status_code');
+          self.write_attribute('status',_status_code.index(value))
         end
       end
     end
