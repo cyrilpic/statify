@@ -40,11 +40,11 @@ module Statify
       else
         define_method('status') do
           _status_code = self.class.instance_variable_get('@_status_code');
-          _status_code[self.read_attribute('status')]
+          _status_code[self[:status]]
         end
         define_method('status=') do |value|
           _status_code = self.class.instance_variable_get('@_status_code');
-          self.write_attribute('status',_status_code.index(value))
+          self[:status] = _status_code.index(value
         end
       end
     end
