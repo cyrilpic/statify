@@ -17,7 +17,11 @@ module Statify
         define_method (sym.to_s+"?") do
           self.status == sym
         end
-        scope sym, where(:status => sym)
+        if Rails::Application::const_defined?(:Mongoid) && include?(Mongoid::Document)
+          scope sym, where(:status => sym)
+        else
+          scope sym, where(:status => @_status_code.index(sym))
+        end
       end
     end
     
@@ -40,7 +44,7 @@ module Statify
       else
         define_method('status') do
           _status_code = self.class.instance_variable_get('@_status_code');
-          _status_code[self[:status]]
+          (self[:status].nil? ? sym : _status_code[self[:status]])
         end
         define_method('status=') do |value|
           _status_code = self.class.instance_variable_get('@_status_code');
