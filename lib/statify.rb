@@ -42,7 +42,7 @@ module Statify
       if Rails::Application::const_defined?(:Mongoid) && include?(Mongoid::Document)
         field :status, :type => Symbol, :default => sym
       else
-        after_initialize lambda { self.status = sym }
+        after_initialize lambda { self.status = sym if self[:status].nil? }
         define_method('status') do
           _status_code = self.class.instance_variable_get('@_status_code');
           (self[:status].nil? ? sym : _status_code[self[:status]])
