@@ -49,7 +49,7 @@ module Statify
         end
         define_method('status=') do |value|
           _status_code = self.class.instance_variable_get('@_status_code');
-          self[:status] = _status_code.index(value)
+          self[:status] = _status_code.index(value.to_sym)
         end
       end
     end
