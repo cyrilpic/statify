@@ -1,14 +1,16 @@
 module Statify
   module Orm
     module Mongoid
-      def _collection_scope_helper
-        scope sym, where(:status => sym)
+      def _collection_scope_helper(name, sym)
+        scope sym, where(name => sym)
       end
       def _configure_collection_accessors(name, options)
-        field_options = {}
-        field_options[:default] = options[:default] if options.key? :default
         type = (options[:symbolize_keys]) ? Symbol : String
-        field name, :type => type, field_options
+        field_options = {
+          type: type
+        }
+        field_options[:default] = options[:default] if options.key? :default
+        field name field_options
       end
     end
   end

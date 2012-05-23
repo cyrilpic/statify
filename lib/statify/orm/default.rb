@@ -1,8 +1,8 @@
 module Statify
   module Orm
     module Default
-      def _collection_scope_helper
-        scope sym, where(:status => @_status_code.index(sym))
+      def _collection_scope_helper(name, sym)
+        scope sym, where(name => @_collections_code[name].index(sym))
       end
       def _configure_collection_accessors(name, options)
         default_value = options[:default]

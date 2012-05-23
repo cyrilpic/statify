@@ -1,7 +1,8 @@
 require "statify/version"
 
 require "active_support/concern"
-require "statify/orm"
+require "statify/orm/default"
+require "statify/orm/mongoid"
 
 module Statify
   
@@ -10,9 +11,9 @@ module Statify
     
     included do
       if Rails::Application::const_defined?(:Mongoid) && include?(Mongoid::Document)
-        include Statify::Orm::Mongoid
+        extend Statify::Orm::Mongoid
       else
-        include Statify::Orm::Default
+        extend Statify::Orm::Default
       end
     end
     
@@ -22,7 +23,7 @@ module Statify
         @_collections_code ||= {}
         name = name.to_sym
         # Setup the model if it's the first time it's called for this name
-        unless @_collections_code[name].any?
+        if @_collections_code[name].nil?
           _configure_collection name, options
           @_collections_code[name] = []
         end
@@ -81,7 +82,7 @@ module Statify
 end
 
 if Rails::Application::const_defined? :ActiveRecord
-  ActiveRecord::Base.include Statify::Models
+  ActiveRecord::Base.__send__ :include, Statify::Models
 end
 if Rails::Application::const_defined? :Mongoid
   Mongoid::Document::ClassMethods.class_eval do
