@@ -79,5 +79,5 @@ ActiveSupport.on_load :active_record do
 end
 ActiveSupport.on_load :mongoid do
   include Statify::Models
-  extend Statify::Orm::Mongoid
+  include Statify::Orm::Mongoid
 end
