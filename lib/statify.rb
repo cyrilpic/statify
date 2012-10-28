@@ -9,14 +9,6 @@ module Statify
   module Models
     extend ActiveSupport::Concern
     
-    included do
-      if Rails::Application::const_defined?(:Mongoid) && include?(Mongoid::Document)
-        extend Statify::Orm::Mongoid
-      else
-        extend Statify::Orm::Default
-      end
-    end
-    
     module ClassMethods
       def register_collection(name, list, options = {})
         options = {symbolize_keys: true}.merge options
@@ -83,7 +75,9 @@ end
 
 ActiveSupport.on_load :active_record do
   include Statify::Models
+  extend Statify::Orm::Default
 end
 ActiveSupport.on_load :mongoid do
   include Statify::Models
+  extend Statify::Orm::Mongoid
 end
