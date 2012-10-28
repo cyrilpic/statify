@@ -81,11 +81,9 @@ module Statify
   end
 end
 
-if Rails::Application::const_defined? :ActiveRecord
-  ActiveRecord::Base.__send__ :include, Statify::Models
+ActiveSupport.on_load :active_record do
+  include Statify::Models
 end
-if Rails::Application::const_defined? :Mongoid
-  Mongoid::Document::ClassMethods.class_eval do
-    include Statify::Models
-  end
+ActiveSupport.on_load :mongoid do
+  include Statify::Models
 end
