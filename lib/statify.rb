@@ -37,6 +37,10 @@ module Statify
         @_collections_code[name.to_sym]
       end
     
+      def collection_registered?(name)
+        !@_collections_code[name.to_sym].nil?
+      end
+    
       # Compatibility methods
       def register_status(list, options = {})
         register_collection :status, list, options
@@ -80,4 +84,15 @@ end
 ActiveSupport.on_load :mongoid do
   include Statify::Models
   include Statify::Orm::Mongoid
+end
+
+require "statify/matchers/have_registered_collection_on_matcher"
+
+module Test
+  module Unit
+    class TestCase
+      include Statify::Matchers
+      extend Statify::Matchers
+    end
+  end
 end
