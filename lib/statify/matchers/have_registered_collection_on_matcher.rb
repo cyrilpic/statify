@@ -11,7 +11,7 @@ module Statify
 
       def matches?(subject)
         @actual_model = subject.class.name
-        subject.collection_registered? @collection_name
+        subject.class.collection_registered? @collection_name
       end
 
       def failure_message
