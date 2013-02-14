@@ -86,7 +86,7 @@ ActiveSupport.on_load :mongoid do
   include Statify::Orm::Mongoid
 end
 
-require "statify/matchers/registered_collection_matcher"
+require "statify/matchers/register_collection_matcher"
 
 module Test
   module Unit
