@@ -10,7 +10,7 @@ module Statify
       end
 
       def matches?(subject)
-        @actual_model = subject.model_name
+        @actual_model = subject.class.name
         subject.collection_registered? @collection_name
       end
 
@@ -23,7 +23,7 @@ module Statify
       end
 
       def description
-        "should have registered a collection on #{@collection_name}"
+        "have registered a collection on #{@collection_name}"
       end
     end
   end
