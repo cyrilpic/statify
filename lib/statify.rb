@@ -38,7 +38,7 @@ module Statify
       end
     
       def collection_registered?(name)
-        !@_collections_code[name.to_sym].nil?
+        !@_collections_code.nil? && !@_collections_code[name.to_sym].nil?
       end
     
       # Compatibility methods
@@ -94,12 +94,5 @@ module Test
       include Statify::Matchers
       extend Statify::Matchers
     end
-  end
-end
-
-if defined?(::Rspec)
-  require 'rspec'
-  RSpec.configure do |config|
-    config.include Statify::Matchers
   end
 end
