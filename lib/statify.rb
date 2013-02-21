@@ -96,3 +96,9 @@ module Test
     end
   end
 end
+
+if defined?(::Rspec)
+  RSpec.configure do |config|
+    config.include Statify::Matchers
+  end
+end
