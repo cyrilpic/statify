@@ -88,6 +88,11 @@ end
 
 require "statify/matchers/register_collection_matcher"
 
+ActiveSupport::TestCase.class_eval do
+  include Statify::Matchers
+  extend Statify::Matchers
+end
+
 module Test
   module Unit
     class TestCase
