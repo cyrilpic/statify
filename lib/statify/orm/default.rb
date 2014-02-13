@@ -7,7 +7,12 @@ module Statify
       def _configure_collection_accessors(name, options)
         default_value = options[:default]
         if options.key? :default
-          after_initialize lambda { self.__send__("#{name}=", default_value) if self.__send__(name).nil? }
+          after_initialize lambda { 
+            begin
+              self.__send__("#{name}=", default_value) if self.__send__(name).nil?
+            rescue ActiveModel::MissingAttributeError => e
+            end
+          }
         end
         
         define_method(name) do
